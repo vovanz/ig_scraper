@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+  api:
+    build:
+      context: ..
+      dockerfile: ./docker/Dockerfile
+    restart: always
+    command: uvicorn main:app --host=0.0.0.0 --port=8080 --debug --reload
+    environment:
+      - SELENIUM_HOST=selenium
+    ports:
+      - "8080:8080"
+  selenium:
+    image: selenium/standalone-chrome:latest
+    shm_size: '2gb'
+    environment:
+      - SE_NODE_MAX_SESSIONS=100
+      - SE_NODE_OVERRIDE_MAX_SESSIONS=true
+    ports:
+      - "4444:4444"
+      - "7900:7900"

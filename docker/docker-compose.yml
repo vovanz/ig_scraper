@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+  api:
+    build:
+      context: ..
+      dockerfile: ./docker/Dockerfile
+    restart: always
+    environment:
+      - SELENIUM_HOST=selenium
+    ports:
+      - "8080:8080"
+  selenium:
+    image: selenium/standalone-chrome:latest
+    shm_size: '2gb'
+    environment:
+      - SE_NODE_MAX_SESSIONS=100
+      - SE_NODE_OVERRIDE_MAX_SESSIONS=true
